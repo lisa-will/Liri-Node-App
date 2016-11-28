@@ -1,10 +1,12 @@
+"use strict"
+
 var twitter = require('twitter');
 var spotify = require('spotify');
 var request = require('request');
 
 function getCommand(){
-    if (process.argv.length < 3){
-        return "junk";
+   if (process.argv.length < 3){
+       return "junk";
     }
     return process.argv[2];
 }
@@ -45,16 +47,16 @@ function myTweets() {
 	var params = {screen_name: '@TheEllenShow', count: 20};
 
 	//Get timeline info
-	client.get('statuses/user_timeline', params, function(error, tweets) {
+	client.get('statuses/user_timeline', params, function(err, tweets) {
 	 	
 	 	//If error occurs
-	 	if (error) {
-		    console.log('Error occurred: ' + error);
+	 	if (err) {
+		    console.log('Error occurred: ' + err);
 		    return;
 		}
 	 	
 	 	//If no error
-	 	if (!error) {
+	 	if (!err) {
 		
 			//Display ten current tweets, numbered 1-20
 			for (var i = 0; i < tweets.length; i++) {
@@ -83,15 +85,15 @@ function getSong() {
     }
 
 	 
-	spotify.search({ type: 'track', query: parameter}, function(error, data) {
+	spotify.search({ type: 'track', query: parameter}, function(err, data) {
 	    //If error occurs
-	    if (error) {
-	        console.log('Error occurred: ' + error);
+	    if (err) {
+	        console.log('Error occurred: ' + err);
 	        return;
 	    }
 	 	
 	 	//If no error
-		if (!error) {
+		if (!err) {
 
 			//Artist name 
 			var artist = data.tracks.items[0].artists[0].name;
@@ -154,6 +156,7 @@ request(queryURL, function omdbResult(err, resp, body){
         console.log("Rotten Tomatoes URL: " + JSON.parse(body).tomatoURL);
 	}
 });
+
 }
 
 //do-what-it-says
@@ -176,7 +179,7 @@ function doWhatItSays() {
 	action = split[0];
 	parameter = split[1];
 
-    run(action);
+    run(command);
 
 	}
     
