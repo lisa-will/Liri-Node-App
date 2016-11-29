@@ -4,15 +4,16 @@ var twitter = require('twitter');
 var spotify = require('spotify');
 var request = require('request');
 
-function getCommand(){
-   if (process.argv.length < 3){
+function getCommand(commandLine){
+   if (commandLine.length < 3){
        return "junk";
     }
-    return process.argv[2];
+    return commandLine[2];
 }
 
-function run(command)
-{
+function run(commandLine){
+
+var command = getCommand(commandLine);
 
 //Switch function to determine what action to take
 switch(command) {
@@ -20,10 +21,10 @@ switch(command) {
 			myTweets();
 			break;
 		case 'spotify-this-song':
-			getSong();
+			getSong(commandLine);
 			break;
 		case 'movie-this':
-			findMovie();
+			findMovie(commandLine);
 			break;
 		case 'do-what-it-says':
 			doWhatItSays();
@@ -55,32 +56,27 @@ function myTweets() {
 		    return;
 		}
 	 	
-	 	//If no error
-	 	if (!err) {
-		
-			//Display ten current tweets, numbered 1-20
-			for (var i = 0; i < tweets.length; i++) {
-				console.log((parseInt([i]) + 1) + '. ' + tweets[i].text);
-			}    
-		}
+		//Display ten current tweets, numbered 1-20
+		for (var i = 0; i < tweets.length; i++) {
+			console.log((parseInt([i]) + 1) + '. ' + tweets[i].text);
+		}    
 	});
-
 }
 
 //spotify-this-song
 //Spotify Function 
-function getSong() {
+function getSong(commandLine) {
 	var parameter = "";
-    if (process.argv.length < 4){
+
+    if (commandLine.length < 4){
         parameter = "the sign";
     }
     else{
-        parameter = process.argv[3];
+        parameter = commandLine[3];
 
         //This pulls movies with more than one word titles 
-        for(var i=4; i < process.argv.length; i++)
-        {
-            parameter = parameter + "+" + process.argv[i];
+        for(var i=4; i < process.argv.length; i++){
+            parameter = parameter + "+" + commandLine[i];
         }
     }
 
@@ -118,22 +114,20 @@ function getSong() {
 
 //movie-this
 //Movie Function 
-function findMovie(){
 
-//If user doesn't provide movie title
-var movieName = "";
-if (process.argv.length < 4){
-    movieName = "Mr.+Nobody";
-}
-else{
-    movieName = process.argv[3];
+function findMovie(commandLine){
+    var movieName = "";
+    if (commandLine.length < 4){
+        movieName = "Mr.+Nobody";
+    }
+    else{
+        movieName = commandLine[3];
 
-//Pulls movies with more than one word titles 
-for(var i=4; i < process.argv.length; i++)
-{
-    movieName = movieName + "+" + process.argv[i];
-}
-}
+        //Pulls movies with more than one word titles 
+        for(var i=4; i < commandLine.length; i++){
+            movieName = movieName + "+" + commandLine[i];
+        }
+    }
 
 //Request to the OMDB API with the movie specified 
 var queryURL = 'http://www.omdbapi.com/?t=' + movieName + '&tomatoes=true&y=&plot=short&r=json';
@@ -171,16 +165,18 @@ function doWhatItSays() {
 	fs.readFile("random.txt", "utf8", callback);
 
     //Callback Function  
-    function callback(error, data)
+    function callback(err, data)
     {
         
 	var split = data.split(',');
 
-	//Assign to user input
-	action = split[0];
-	parameter = split[1];
-
-    run(command);
+	//Assign to commandLine
+    var commandLine = [];
+    commandLine[0] = "node";
+    commandLine[1] = "liri.js";
+    commandLine[2] = split[0];
+    commandLine[3] = split[1];
+	run(commandLine);
 
 	}
     
@@ -188,4 +184,4 @@ function doWhatItSays() {
 }
 
 //Run function
-run();
+run(process.argv);
