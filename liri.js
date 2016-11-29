@@ -35,7 +35,8 @@ switch(command) {
 }
 
 //my-tweets
-//Twitter Function 
+//Pulls 20 most-recent tweets from... Ellen! 
+//myTweets Function 
 function myTweets() {
 
 	//Grab the keys.js info
@@ -64,7 +65,8 @@ function myTweets() {
 }
 
 //spotify-this-song
-//Spotify Function 
+//If user does not provide song title - default search: "the sign"  
+//getSong Function 
 function getSong(commandLine) {
 	var parameter = "";
 
@@ -112,8 +114,9 @@ function getSong(commandLine) {
 
 }
 
-//movie-this
-//Movie Function 
+//movie-this 
+//If user does not provide movie title - default search: "Mr. Nobody" 
+//findMovie Function 
 
 function findMovie(commandLine){
     var movieName = "";
@@ -155,6 +158,7 @@ request(queryURL, function omdbResult(err, resp, body){
 }
 
 //do-what-it-says
+//Reads content inside of "random.txt" & completes task 
 //Do-What-It-Says Function 
 function doWhatItSays() {
 
