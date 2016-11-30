@@ -1,0 +1,28 @@
+{
+  "name": "liri-node-app",
+  "version": "1.0.0",
+  "description": "command line node app.",
+  "main": "keys.js",
+  "dependencies": {
+    "request": "^2.79.0",
+    "spotify": "^0.3.0",
+    "twitter": "^1.4.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lisarenee/Liri-Node-App.git"
+  },
+  "keywords": [
+    "liri-node-app"
+  ],
+  "author": "lisa williams",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lisarenee/Liri-Node-App/issues"
+  },
+  "homepage": "https://github.com/lisarenee/Liri-Node-App#readme"
+}
